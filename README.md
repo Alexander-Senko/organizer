@@ -1,8 +1,21 @@
 # Organizer
-Short description and motivation.
+
+A Rails Engine providing some tools to organize your application records, e.g. _lists_, _tags_, _flags_, etc.
 
 ## Usage
-How to use my plugin.
+
+### `Identifiable`
+
+Presuming `MyModel` has a unique `name` attribute:
+
+```ruby
+class MyModel < ApplicationRecord
+  include Organizer::Identifiable.by :name
+end
+
+MyModel.names     # => [:my_name, :other_name, …]
+MyModel[:my_name] # => #<MyModel1 id: 1, name: "my_name">
+```
 
 ## Installation
 Add this line to your application's Gemfile:

@@ -3,7 +3,7 @@ require_relative 'lib/organizer/authors'
 
 Gem::Specification.new do |spec|
   spec.platform    = Gem::Platform::RUBY
-  spec.name        = "organizer"
+  spec.name        = "organizer-rails"
   spec.version     = Organizer::VERSION
   spec.authors     = Organizer::AUTHORS.filter_map &:name
   spec.email       = Organizer::AUTHORS.filter_map &:email

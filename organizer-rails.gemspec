@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version     = Organizer::VERSION
   spec.authors     = Organizer::AUTHORS.filter_map &:name
   spec.email       = Organizer::AUTHORS.filter_map &:email
-  spec.homepage    = "#{Organizer::AUTHORS.filter_map(&:github_url).first}/#{spec.name}"
+  spec.homepage    = "#{Organizer::AUTHORS.filter_map(&:github_url).first}/organizer"
   spec.summary     = 'Record organizer for Rails'
   spec.description = 'Use lists, tags, flags, etc. to organize your application records.'
   spec.license     = "MIT"

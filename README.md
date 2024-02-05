@@ -21,7 +21,7 @@ MyModel[:my_name] # => #<MyModel1 id: 1, name: "my_name">
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "organizer-rails"
+gem "organizer-rails", require: "organizer"
 ```
 
 And then execute:

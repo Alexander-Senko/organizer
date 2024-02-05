@@ -1,3 +1,5 @@
+require 'memery'
+
 module Organizer
 	concern :Identifiable do
 		class << self
@@ -8,7 +10,8 @@ module Organizer
 							@identified_by = column_name
 						end
 
-						class_methods do # public API
+						class_methods do
+							# public API
 							define_method(column_name.to_s.pluralize) { identifiers }
 						end
 					end
@@ -17,7 +20,9 @@ module Organizer
 		end
 
 		class_methods do
-			def [] *id
+			include Memery
+
+			def [] * id
 				return id.map { self[_1] } if id.many?
 
 				case id = id.first
@@ -31,15 +36,13 @@ module Organizer
 
 			private
 
-			def identifiers
-				@identifiers ||= # cache
-						all.pluck(@identified_by)
-								.map &:to_sym
+			memoize def identifiers
+				all.pluck(@identified_by)
+						.map &:to_sym
 			end
 
-			def identified_as identifier
-				(@identified ||= {}.with_indifferent_access)[identifier] ||= # cache
-						find_by @identified_by => identifier
+			memoize def identified_as identifier
+				find_by @identified_by => identifier
 			end
 		end
 	end

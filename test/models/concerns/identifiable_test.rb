@@ -46,7 +46,20 @@ describe Organizer::Identifiable do
 			it 'returns all the IDs present' do
 				_(subject.codes).must_equal n.times
 						.map(&:to_s)
-						.map(&:to_sym)
+			end
+
+			describe 'symbolized' do
+				subject do
+					Class.new(Model1).tap do
+						_1.include Organizer::Identifiable.by :code, symbolized: true
+					end
+				end
+
+				it 'returns all the IDs present' do
+					_(subject.codes).must_equal n.times
+							.map(&:to_s)
+							.map(&:to_sym)
+				end
 			end
 		end
 	end

@@ -3,16 +3,22 @@ require 'memery'
 module Organizer
 	concern :Identifiable do
 		class << self
-			def by column_name
+			def by column_name, symbolized: false
 				dup.tap do
 					_1.module_eval do
 						included do
 							@identified_by = column_name
+							@symbolize_ids = symbolized
 						end
 
-						class_methods do
-							# public API
-							define_method(column_name.to_s.pluralize) { identifiers }
+						class_methods do # public API
+							define_method column_name.to_s.pluralize do
+								if @symbolize_ids
+									identifiers.map &:to_sym
+								else
+									identifiers
+								end
+							end
 						end
 					end
 				end
@@ -22,7 +28,7 @@ module Organizer
 		class_methods do
 			include Memery
 
-			def [] * id
+			def [] *id
 				return id.map { self[_1] } if id.many?
 
 				case id = id.first
@@ -38,7 +44,6 @@ module Organizer
 
 			memoize def identifiers
 				all.pluck(@identified_by)
-						.map &:to_sym
 			end
 		end
 	end

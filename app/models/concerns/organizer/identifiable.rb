@@ -27,9 +27,9 @@ module Organizer
 
 				case id = id.first
 				when Enumerable
-					id.filter_map { identified_as _1 }
+					where   @identified_by => id
 				else
-					identified_as id or
+					find_by @identified_by => id or
 							raise ArgumentError, "Couldn't find #{self} `#{id}`"
 				end
 			end
@@ -39,10 +39,6 @@ module Organizer
 			memoize def identifiers
 				all.pluck(@identified_by)
 						.map &:to_sym
-			end
-
-			memoize def identified_as identifier
-				find_by @identified_by => identifier
 			end
 		end
 	end

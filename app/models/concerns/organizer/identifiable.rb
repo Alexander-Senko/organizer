@@ -12,13 +12,13 @@ module Organizer
 						end
 
 						class_methods do # public API
-							define_method column_name.to_s.pluralize do
+							memoize define_method(column_name.to_s.pluralize) {
 								if @symbolize_ids
 									identifiers.map &:to_sym
 								else
 									identifiers
 								end.to_set
-							end
+							}
 						end
 					end
 				end
@@ -42,7 +42,7 @@ module Organizer
 
 			private
 
-			memoize def identifiers
+			def identifiers
 				all.pluck(@identified_by)
 			end
 		end

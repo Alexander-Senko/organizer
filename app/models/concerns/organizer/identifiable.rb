@@ -17,7 +17,7 @@ module Organizer
 									identifiers.map &:to_sym
 								else
 									identifiers
-								end
+								end.to_set
 							end
 						end
 					end

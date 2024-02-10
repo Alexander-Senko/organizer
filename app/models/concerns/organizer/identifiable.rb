@@ -1,5 +1,3 @@
-require 'memery'
-
 module Organizer
 	concern :Identifiable do
 		class << self
@@ -12,13 +10,13 @@ module Organizer
 						end
 
 						class_methods do # public API
-							memoize define_method(column_name.to_s.pluralize) {
+							define_method column_name.to_s.pluralize do
 								if @symbolize_ids
 									identifiers.map &:to_sym
 								else
 									identifiers
 								end.to_set
-							}
+							end
 						end
 					end
 				end
@@ -26,8 +24,6 @@ module Organizer
 		end
 
 		class_methods do
-			include Memery
-
 			def [] *id
 				return id.map { self[_1] } if id.many?
 

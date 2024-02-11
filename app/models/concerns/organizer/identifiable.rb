@@ -10,13 +10,7 @@ module Organizer
 						end
 
 						class_methods do # public API
-							define_method column_name.to_s.pluralize do
-								if @symbolize_ids
-									identifiers.map &:to_sym
-								else
-									identifiers
-								end.to_set
-							end
+							define_method(column_name.to_s.pluralize) { identifiers }
 						end
 					end
 				end
@@ -40,6 +34,7 @@ module Organizer
 
 			def identifiers
 				all.pluck(@identified_by)
+						.then { @symbolize_ids ? _1.map(&:to_sym) : _1 }
 			end
 		end
 	end

@@ -46,7 +46,6 @@ describe Organizer::Identifiable do
 			it 'returns all the IDs present' do
 				_(subject.codes).must_equal n.times
 						.map(&:to_s)
-						.to_set
 			end
 
 			describe 'symbolized' do
@@ -60,7 +59,6 @@ describe Organizer::Identifiable do
 					_(subject.codes).must_equal n.times
 							.map(&:to_s)
 							.map(&:to_sym)
-							.to_set
 				end
 			end
 		end

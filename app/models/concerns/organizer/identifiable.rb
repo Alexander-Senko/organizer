@@ -10,13 +10,7 @@ module Organizer
 						end
 
 						class_methods do # public API
-							define_method column_name.to_s.pluralize do
-								if @symbolize_ids
-									identifiers.map &:to_sym
-								else
-									identifiers
-								end.to_set
-							end
+							define_method(column_name.to_s.pluralize) { identifiers }
 						end
 					end
 				end
@@ -24,10 +18,10 @@ module Organizer
 		end
 
 		class_methods do
-			def [] *id
-				return id.map { self[_1] } if id.many?
+			def [] id, *ids
+				return [ id, *ids ].map { self[_1] } if ids.any?
 
-				case id = id.first
+				case id
 				when Enumerable
 					where   @identified_by => id
 				else
@@ -40,6 +34,7 @@ module Organizer
 
 			def identifiers
 				all.pluck(@identified_by)
+						.tap { _1.map! &:to_sym if @symbolize_ids }
 			end
 		end
 	end

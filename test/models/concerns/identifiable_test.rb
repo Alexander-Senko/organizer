@@ -7,7 +7,7 @@ describe Organizer::Identifiable do
 	describe '.by' do
 		subject { described_class.by :id_attribute }
 
-		let(:identifiable) { Class.new.tap { _1.include subject } }
+		let(:identifiable) { Class.new.tap { it.include subject } }
 
 		it 'defines a module' do
 			_(subject).must_be_instance_of Module
@@ -23,7 +23,7 @@ describe Organizer::Identifiable do
 		let(:n) { 5 }
 
 		before do
-			n.times { Model1.find_or_create_by! code: _1 }
+			n.times { |code| Model1.find_or_create_by! code: }
 		end
 
 		describe '[]' do
@@ -51,7 +51,7 @@ describe Organizer::Identifiable do
 			describe 'symbolized' do
 				subject do
 					Class.new(Model1).tap do
-						_1.include Organizer::Identifiable.by :code, symbolized: true
+						it.include Organizer::Identifiable.by :code, symbolized: true
 					end
 				end
 

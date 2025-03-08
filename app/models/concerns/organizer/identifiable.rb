@@ -3,7 +3,7 @@ module Organizer
 		class << self
 			def by column_name, symbolized: false
 				dup.tap do
-					_1.module_eval do
+					it.module_eval do
 						included do
 							@identified_by = column_name
 							@symbolize_ids = symbolized
@@ -19,7 +19,7 @@ module Organizer
 
 		class_methods do
 			def [] id, *ids
-				return [ id, *ids ].map { self[_1] } if ids.any?
+				return [ id, *ids ].map { self[it] } if ids.any?
 
 				case id
 				when Enumerable
@@ -34,7 +34,7 @@ module Organizer
 
 			def identifiers
 				all.pluck(@identified_by)
-						.tap { _1.map! &:to_sym if @symbolize_ids }
+						.tap { it.map! &:to_sym if @symbolize_ids }
 			end
 		end
 	end

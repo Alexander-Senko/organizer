@@ -13,8 +13,20 @@ class MyModel < ApplicationRecord
   include Organizer::Identifiable.by :name
 end
 
-MyModel.names     # => [:my_name, :other_name, …]
-MyModel[:my_name] # => #<MyModel1 id: 1, name: "my_name">
+MyModel.names                   # => ["my_name", "other_name", …]
+MyModel[:my_name]               # => #<MyModel id: 1, name: "my_name">
+MyModel[:my_name, :other_name]  # => [#<MyModel id: 1, name: "my_name">, #<MyModel id: 2, name: "other_name">]
+MyModel[%w[my_name other_name]] # => #<ActiveRecord::Relation …>
+```
+
+To expose identifiers as symbols:
+
+```ruby
+class MyModel < ApplicationRecord
+  include Organizer::Identifiable.by :name, symbolized: true
+end
+
+MyModel.names # => [:my_name, :other_name, ...]
 ```
 
 ## Installation
